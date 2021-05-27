@@ -39,7 +39,7 @@ def state_wait_enter(app, win):
     if hasattr(app, 'previous_qr'):
         win_rect = win.get_rect()
         qr_rect = app.previous_qr.get_rect()
-        win.surface.blit(app.previous_qr, (10, win_rect.height - qr_rect.height - 10))
+        win.surface.blit(app.previous_qr, (50, win_rect.height - qr_rect.height - 50))
 
 
 @pibooth.hookimpl
@@ -47,9 +47,9 @@ def state_processing_exit(app, cfg):
     """
     Generate the QR Code and store it in the application.
     """
-    qr = qrcode.QRCode(version=1,
-                       error_correction=qrcode.constants.ERROR_CORRECT_L,
-                       box_size=3,
+    qr = qrcode.QRCode(version=None,
+                       error_correction=qrcode.constants.ERROR_CORRECT_H,
+                       box_size=5,
                        border=1)
 
     if cfg.getboolean("QRCODE", 'unique_url'):
@@ -73,5 +73,5 @@ def state_print_enter(app, win):
     """
     win_rect = win.get_rect()
     qr_rect = app.previous_qr.get_rect()
-    win.surface.blit(app.previous_qr, (win_rect.width - qr_rect.width - 10,
-                                       win_rect.height - qr_rect.height - 10))
+    win.surface.blit(app.previous_qr, (win_rect.width - qr_rect.width - 50,
+                                       win_rect.height - qr_rect.height - 50))
