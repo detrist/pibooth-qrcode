@@ -39,7 +39,7 @@ def state_wait_enter(app, win):
     if hasattr(app, 'previous_qr'):
         win_rect = win.get_rect()
         qr_rect = app.previous_qr.get_rect()
-        win.surface.blit(app.previous_qr, (50, win_rect.height - qr_rect.height - 50))
+        win.surface.blit(app.previous_qr, (300, win_rect.height - qr_rect.height - 50))
 
 
 @pibooth.hookimpl
@@ -73,5 +73,5 @@ def state_print_enter(app, win):
     """
     win_rect = win.get_rect()
     qr_rect = app.previous_qr.get_rect()
-    win.surface.blit(app.previous_qr, (win_rect.width - qr_rect.width - 50,
+    win.surface.blit(app.previous_qr, (win_rect.width - qr_rect.width - 300,
                                        win_rect.height - qr_rect.height - 50))
