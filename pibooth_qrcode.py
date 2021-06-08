@@ -32,7 +32,7 @@ def pibooth_startup(cfg, app):
 
 
 @pibooth.hookimpl
-def state_wait_enter(app, win):
+def state_wait_do(app, win):
     """
     Display the QR Code on the wait view.
     """
