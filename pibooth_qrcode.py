@@ -21,6 +21,8 @@ def pibooth_configure(cfg):
                    "Use only one URL", ["True", "False"])
     cfg.add_option('QRCODE', 'foreground', (255, 255, 255),
                    "QR code foreground color", "Color", (255, 255, 255))
+    cfg.add_option('QRCODE', 'foreground_fail', (255, 232, 229),
+                   "QR code foreground color for failures", "Color", (255, 232, 229))
     cfg.add_option('QRCODE', 'background', (0, 0, 0),
                    "QR code background color", "Background color", (0 ,0 ,0))
 
@@ -32,7 +34,7 @@ def pibooth_startup(cfg, app):
 
 
 @pibooth.hookimpl
-def state_wait_enter(app, win):
+def state_wait_do(app, win):
     """
     Display the QR Code on the wait view.
     """
@@ -61,6 +63,12 @@ def state_processing_exit(app, cfg):
     qr.make(fit=True)
     qrcode_fill_color = '#%02x%02x%02x' %cfg.gettyped("QRCODE", 'foreground')
     qrcode_background_color = '#%02x%02x%02x' % cfg.gettyped("QRCODE", 'background')
+
+    try:
+        if app.qrcode_fail:
+            qrcode_fill_color = '#%02x%02x%02x' %cfg.gettyped("QRCODE", 'foreground_fail')
+    except:
+        qrcode_fill_color = '#%02x%02x%02x' %cfg.gettyped("QRCODE", 'foreground_fail')
 
     image = qr.make_image(fill_color=qrcode_fill_color, back_color=qrcode_background_color)
     app.previous_qr = pygame.image.fromstring(image.tobytes(), image.size, image.mode)
